@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0;md5=801f80980d171dd6425
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-DEPENDS = "u-boot fip-native"
+DEPENDS = "u-boot atf-native"
 
 SRC_URI = "\
     file://boot.ini \
