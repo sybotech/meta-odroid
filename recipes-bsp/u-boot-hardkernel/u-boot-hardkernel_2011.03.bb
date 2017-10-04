@@ -21,6 +21,7 @@ SRC_URI = " \
     file://0001-usb-use-define-not-func.patch \
     file://0002-fix-build-error-under-gcc6.patch \
     file://m8_osd_hw_build_fix.patch \
+    file://0001-gcc-7-fix.patch \
 "
 
 SRC_URI_append_odroid-c1 = " \
