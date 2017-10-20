@@ -1,8 +1,8 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
-LINUX_VERSION ?= "4.13.4"
+LINUX_VERSION ?= "4.13.7"
 
-SRCREV ?= "6eb9c0fc1bca163dd084da77d77bb11c4b1639bc"
+SRCREV ?= "e9dde66df5f719b063aaea8acf073cbfc6952821"
 SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.13.y"
 
 O_KERNEL_CONFIG_odroid-xu3  = "odroid-xu3"
@@ -10,6 +10,7 @@ O_KERNEL_CONFIG_odroid-xu4  = "odroid-xu3"
 O_KERNEL_CONFIG_odroid-xu3-lite  = "odroid-xu3"
 O_KERNEL_CONFIG_odroid-c2  = "odroid-c2"
 O_KERNEL_CONFIG_odroid-c1  = "odroid-c1"
+O_KERNEL_CONFIG_odroid-xu4s  = "odroid-xu4s"
 
 require linux-stable.inc
 
@@ -27,4 +28,4 @@ do_deploy_append_odroid-c2 () {
 	 install -m 0644 ${D}/${KERNEL_IMAGEDEST}/uImage ${DEPLOY_DIR_IMAGE}/uImage
 } 
 
-COMPATIBLE_MACHINE = "(odroid-c1|odroid-c2|odroid-xu3|odroid-xu4|odroid-xu3-lite)"
+COMPATIBLE_MACHINE = "(odroid-c1|odroid-c2|odroid-xu3|odroid-xu4|odroid-xu3-lite|odroid-xu4s)"
