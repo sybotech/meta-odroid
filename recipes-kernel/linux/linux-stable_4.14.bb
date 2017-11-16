@@ -1,16 +1,12 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
-LINUX_VERSION ?= "4.13.11"
 
-SRCREV ?= "3996e9c638b8fe280971dc7f7c1f5baf3a6b4578"
-SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.13.y"
+LINUX_VERSION ?= "4.14"
+KBRANCH ?= "linux-4.14.y"
+SRCREV ?= "bebc6082da0a9f5d47a1ea2edc099bf671058bd4"
 
-O_KERNEL_CONFIG_odroid-xu3  = "odroid-xu3"
-O_KERNEL_CONFIG_odroid-xu4  = "odroid-xu3"
-O_KERNEL_CONFIG_odroid-xu3-lite  = "odroid-xu3"
 O_KERNEL_CONFIG_odroid-c2  = "odroid-c2"
 O_KERNEL_CONFIG_odroid-c1  = "odroid-c1"
-O_KERNEL_CONFIG_odroid-xu4s  = "odroid-xu4s"
 
 require linux-stable.inc
 
