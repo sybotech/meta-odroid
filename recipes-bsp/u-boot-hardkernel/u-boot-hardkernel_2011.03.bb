@@ -1,5 +1,4 @@
 require u-boot.inc
-
 LICENSE="GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1707d6db1d42237583f50183a5651ecb"
 
@@ -24,9 +23,6 @@ SRC_URI = " \
     file://0001-gcc-7-fix.patch \
 "
 
-SRC_URI_append_odroid-c1 = " \
-    file://boot.ini \
-"
 SRC_URI_append = " ${@bb.utils.contains('TUNE_FEATURES','callconvention-hard',' file://0002-added-hardfp-support.patch ','',d)}"
 
 PARALLEL_MAKE = ""
@@ -41,11 +37,6 @@ BL1_IMAGE ?= "bl1-${MACHINE}-${PV}-${PR}.${BL1_SUFFIX}"
 BL1_BINARY ?= "bl1.${BL1_SUFFIX}"
 BL1_SYMLINK ?= "bl1-${MACHINE}.${BL1_SUFFIX}"
 
-do_install_append () {
-    install -d ${D}/boot/
-    install ${WORKDIR}/boot.ini ${D}/boot/boot.ini
-}
-
 do_deploy_append () {
     install ${S}/sd_fuse/${BL1_BINARY} ${DEPLOYDIR}/${BL1_IMAGE}
 
@@ -55,12 +46,8 @@ do_deploy_append () {
     ln -sf ${BL1_IMAGE} ${BL1_BINARY}
 }
 
-FILES_u-boot-ini = "/boot/boot.ini"
-CONFFILES_u-boot-ini = "/boot/boot.ini"
-
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-PROVIDES =+ "u-boot ${PN}-config"
-PACKAGES =+ "u-boot-ini"
+PROVIDES =+ "u-boot"
 
 COMPATIBLE_MACHINE = "(odroid-c1)"

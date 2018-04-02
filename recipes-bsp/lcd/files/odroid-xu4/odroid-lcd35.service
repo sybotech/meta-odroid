@@ -1,0 +1,13 @@
+[Unit]
+Description=Odroid LCD 3.5
+ConditionPathExists=/dev/fb2
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/setterm -blank 0 -powersave off
+#ExecStart=/bin/con2fbmap 1 2
+StandardOutput=tty
+
+[Install]
+WantedBy=multi-user.target

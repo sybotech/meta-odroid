@@ -45,7 +45,7 @@ SDCARD_GENERATION_COMMAND_odroid-xu4= "generate_odroid_xu_sdcard"
 SDCARD_GENERATION_COMMAND_odroid-xu3-lite= "generate_odroid_xu_sdcard"
 SDCARD_GENERATION_COMMAND_odroid-c1= "generate_odroid_c1_sdcard"
 SDCARD_GENERATION_COMMAND_odroid-c2= "generate_odroid_c2_sdcard"
-SDCARD_GENERATION_COMMAND_odroid-xu4s= "generate_odroid_xu_sdcard"
+SDCARD_GENERATION_COMMAND_odroid-hc1= "generate_odroid_xu_sdcard"
 
 generate_odroid_c1_sdcard () {
 	case "${IMAGE_BOOTLOADER}" in
@@ -68,7 +68,7 @@ generate_odroid_c2_sdcard () {
 #write u-boot and first bootloader as done by the Hardkernel script sd_fusing.sh at http://dn.odroid.com/S905/BootLoader/ODROID-C2/c2_bootloader.tar.gz
            	dd if=${DEPLOY_DIR_IMAGE}/bl1.bin.hardkernel of=${SDCARD} conv=notrunc bs=1 count=442
            	dd if=${DEPLOY_DIR_IMAGE}/bl1.bin.hardkernel of=${SDCARD} conv=notrunc bs=512 skip=1 seek=1
-         	dd if=${DEPLOY_DIR_IMAGE}/u-boot-odroid-c2.bin of=${SDCARD} conv=notrunc bs=512 seek=97
+         	dd if=${DEPLOY_DIR_IMAGE}/u-boot-${MACHINE}.${UBOOT_SUFFIX} of=${SDCARD} conv=notrunc bs=512 seek=97
 		;;
 
 		*)
@@ -171,7 +171,7 @@ IMAGE_CMD_sdcard () {
     mkfs.vfat -n "Odroid" -S 512 -C ${WORKDIR}/boot.img ${BOOT_BLOCKS}
 
     DTS_BASE_NAME=`basename ${KERNEL_DEVICETREE} | awk -F "." '{print $1}'`
-    UBOOT_SCRIPT_KERNEL=`echo ${UBOOT_KENREL_NAME} | awk '{print tolower($0)}'`
+    UBOOT_SCRIPT_KERNEL=`echo ${UBOOT_KERNEL_NAME} | awk '{print tolower($0)}'`
     mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.bin ::/${UBOOT_SCRIPT_KERNEL}
     mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${DTS_BASE_NAME}.dtb ::/${DTS_BASE_NAME}.dtb
     mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/${UBOOT_SCRIPT} ::/${UBOOT_SCRIPT}

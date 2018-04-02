@@ -1,0 +1,39 @@
+#!/bin/sh
+
+start() {
+	echo -n "Configuring ODROID 3.5 LCD: "
+	echo 500000 > /sys/devices/platform/pwm-ctrl/freq0
+	echo 1 > /sys/devices/platform/pwm-ctrl/enable0
+	echo 1023 > /sys/devices/platform/pwm-ctrl/duty0
+	/usr/bin/setterm -blank 0 -powersave off
+	#/bin/con2fbmap 1 2
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+stop() {
+	echo -n "Stopping ODROID 3.5 LCD: "
+	echo 0 > /sys/devices/platform/pwm-ctrl/duty0
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+restart() {
+	stop
+	sleep 3
+	start
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart|reload)
+		restart
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac
+
+exit $?
+
