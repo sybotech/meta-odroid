@@ -1,0 +1,123 @@
+From e03efbce6bebf55111ec8e22e2f545f72aff6cfd Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Linus=20L=C3=BCssing?= <linus.luessing@c0d3.blue>
+Date: Sat, 17 Mar 2018 21:11:14 +0100
+Subject: [PATCH] ARM: dts: meson8b-odroidc1: add microSD support
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The Odroid C1 features a microSD slot. This patch adds the necessary
+DT bindings to support it.
+
+Signed-off-by: Linus Lüssing <linus.luessing@c0d3.blue>
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+---
+ arch/arm/boot/dts/meson8b-odroidc1.dts | 58 ++++++++++++++++++++++++++++++++++
+ arch/arm/boot/dts/meson8b.dtsi         |  8 +++++
+ 2 files changed, 66 insertions(+)
+
+diff --git a/arch/arm/boot/dts/meson8b-odroidc1.dts b/arch/arm/boot/dts/meson8b-odroidc1.dts
+index d5e8305..3a5603d 100644
+--- a/arch/arm/boot/dts/meson8b-odroidc1.dts
++++ b/arch/arm/boot/dts/meson8b-odroidc1.dts
+@@ -54,6 +54,7 @@
+ 
+ 	aliases {
+ 		serial0 = &uart_AO;
++		mmc0 = &sd_card_slot;
+ 	};
+ 
+ 	memory {
+@@ -69,6 +70,37 @@
+ 			default-state = "off";
+ 		};
+ 	};
++
++	tflash_vdd: regulator-tflash_vdd {
++		/*
++		 * signal name from schematics: TFLASH_VDD_EN
++		 */
++		compatible = "regulator-fixed";
++
++		regulator-name = "TFLASH_VDD";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&gpio GPIOY_12 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
++
++	tf_io: gpio-regulator-tf_io {
++		compatible = "regulator-gpio";
++
++		regulator-name = "TF_IO";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
++
++		/*
++		 * signal name from schematics: TF_3V3N_1V8_EN
++		 */
++		gpios = <&gpio_ao GPIOAO_3 GPIO_ACTIVE_HIGH>;
++		gpios-states = <0>;
++
++		states = <3300000 0
++			  1800000 1>;
++	};
+ };
+ 
+ &uart_AO {
+@@ -100,6 +132,32 @@
+ 	status = "okay";
+ };
+ 
++&sdio {
++	status = "okay";
++
++	pinctrl-0 = <&sd_b_pins>;
++	pinctrl-names = "default";
++
++	/* SD card */
++	sd_card_slot: slot@1 {
++		compatible = "mmc-slot";
++		reg = <1>;
++		status = "okay";
++
++		bus-width = <4>;
++		no-sdio;
++		cap-mmc-highspeed;
++		cap-sd-highspeed;
++		disable-wp;
++
++		cd-gpios = <&gpio CARD_6 GPIO_ACTIVE_HIGH>;
++		cd-inverted;
++
++		vmmc-supply = <&tflash_vdd>;
++		vqmmc-supply = <&tf_io>;
++	};
++};
++
+ &ethmac {
+ 	status = "okay";
+ 
+diff --git a/arch/arm/boot/dts/meson8b.dtsi b/arch/arm/boot/dts/meson8b.dtsi
+index 5f7841b..f9eceab 100644
+--- a/arch/arm/boot/dts/meson8b.dtsi
++++ b/arch/arm/boot/dts/meson8b.dtsi
+@@ -206,6 +206,14 @@
+ 				function = "ethernet";
+ 			};
+ 		};
++
++		sd_b_pins: sd-b {
++			mux {
++				groups = "sd_d0_b", "sd_d1_b", "sd_d2_b",
++					"sd_d3_b", "sd_clk_b", "sd_cmd_b";
++				function = "sd_b";
++			};
++		};
+ 	};
+ };
+ 
+-- 
+2.7.4
+

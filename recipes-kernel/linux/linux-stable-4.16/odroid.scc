@@ -1,0 +1,10 @@
+patch 0001-exynos5422-odroidhc1.dts-fix-booting-from-mmc.patch
+patch 0001-ARM-dts-meson8b-grow-the-reset-controller-memory-zon.patch
+patch 0002-ARM-dts-meson8-add-the-reset-controller.patch
+patch 0003-ARM-dts-meson8-add-the-USB-reset-line.patch
+patch 0004-ARM-dts-meson8b-extend-ethernet-controller-descripti.patch
+patch 0005-ARM-dts-meson8b-odroidc1-ethernet-support.patch
+patch 0006-ARM-dts-meson8b-add-the-I2C-clocks.patch
+patch 0007-ARM-dts-meson8b-odroidc1-add-microSD-support.patch
+patch 0008-ARM-dts-meson8b-the-CBUS-GPIO-controller-only-has-83.patch
+

@@ -8,7 +8,7 @@ XSERVER ?= "xserver-xorg \
            xf86-input-keyboard"
 
 PREFERRED_PROVIDER_virtual/kernel ?= "linux-stable"
-PREFERRED_VERSION_linux-stable ?= "4.14%"
+PREFERRED_VERSION_linux-stable ?= "4.16%"
 LINUX_VERSION_EXTENSION ?= "-odroid"
 
 KERNEL_IMAGETYPE ?= "zImage"
@@ -34,15 +34,12 @@ UBOOT_ROOTTYPE ?= "mmcblk1p"
 
 UBOOT_EXTRA_ENV ?= ""
 UBOOT_FILE_TITLE ?= "#"
-
 BOOT_PREFIX ?= ""
-
-IMAGE_ROOTFS_ALIGNMENT ?= "4096"
 
 MACHINE_FEATURES = "serial usbgadget usbhost vfat ext2 alsa screen"
 MACHINE_EXTRA_RRECOMMENDS += " kernel-modules kernel-devicetree"
 
 EXTRA_IMAGEDEPENDS += "u-boot"
 
-IMAGE_FSTYPES += " ext4 sdcard"
+IMAGE_FSTYPES += " ext4"
 IMAGE_CLASSES += "image_types_odroid"
