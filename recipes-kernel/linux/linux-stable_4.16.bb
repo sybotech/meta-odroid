@@ -1,12 +1,16 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
-LINUX_VERSION ?= "4.16.2"
+LINUX_VERSION ?= "4.16.8"
 KBRANCH ?= "linux-4.16.y"
-SRCREV ?= "216f33936eaa006a8b4f5bb992592e34f6432fc2"
+SRCREV ?= "dec316ea18281d2892324a4bfeb4d5a8a6605e69"
 
 require linux-stable.inc
 
+DEPENDS += "openssl-native util-linux-native"
+
 SRC_URI_append = " file://odroid.scc"
-SRC_URI_append_odroid-xu3 = " file://${O_KERNEL_CONFIG}/fb.cfg"
-SRC_URI_append_odroid-xu3-lite = " file://${O_KERNEL_CONFIG}/fb.cfg"
-SRC_URI_append_odroid-xu4 = " file://${O_KERNEL_CONFIG}/fb.cfg"
+
+
+do_configure_prepend() {
+    cp ${WORKDIR}/${O_KERNEL_CONFIG}/defconfig ${B}/.config
+}

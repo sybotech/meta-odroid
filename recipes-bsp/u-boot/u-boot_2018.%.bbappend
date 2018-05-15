@@ -4,6 +4,7 @@ USE_BOOTSRC ?= "0"
 inherit uboot-boot-scr
 
 DEPENDS += "u-boot-mkimage-native atf-native"
+SRC_URI_append =  " file://0001-mmc-avoid-division-by-zero-in-meson_mmc_config_clock.patch"
 
 SRC_URI_append_odroid-c2 = "\
     file://odroid-c2/aml_encrypt_gxb \
